@@ -1,4 +1,5 @@
 <template>
+<v-row>
   <v-card
     class="mx-auto"
     max-width="344"
@@ -8,10 +9,10 @@
       <p class="display-1 text--primary">
         {{ post.cons }}
       </p>
-      <p>adjective</p>
+      <p>{{ post.pos }}</p>
       <div class="text--primary">
-        well meaning and kindly.<br>
-        "a benevolent smile"
+        {{ post.def[0]}}<br><br>
+        {{ post.def[1] !== null ? post.def[1] : ''}}
       </div>
     </v-card-text>
     <v-card-actions>
@@ -23,6 +24,25 @@
       </v-btn>
     </v-card-actions>
   </v-card>
+  <v-card
+    class="mx-auto px-5"
+    max-width="344"
+  >
+    <v-card-actions>
+      <v-btn
+        text
+        color="deep-purple accent-4"
+      >
+        Learn More
+      </v-btn>
+    </v-card-actions>
+    <v-card-text v-for="(item, i) in relatedWords" :key='item.id'>
+      <nuxt-link :to="'/words/' + item.id">{{ i+1 }}. {{ item.id }}</nuxt-link>
+    </v-card-text>
+  </v-card>
+</v-row>
+
+
 </template>
 
 <script>
@@ -30,32 +50,27 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      words : [
-        {
-          id: 'idiomatic',
-          cons: 'id•i•o•mat•ic',
-          pronounce: 'ˌidēəˈmadik',
-          pos: 'adjective',
-          def: [
-            'using, containing, or denoting expressions that are natural to a native speaker',
-            'appropriate to the style of art or music associated with a particular period, individual, or group'
-          ]
-        },
-        {
-          id: 'idolatry',
-          cons: 'i•dol•a•try',
-          pronounce: 'īˈdälətrē',
-          pos: 'noun',
-          def: [
-            'extreme admiration, love, or reverence for something or someone'
-          ]
-        }
+      words : []
+    }
+  },
+  head() {
+    return {
+      title: this.post.id,
+      meta: [
+        { name: 'twitter:title', content: this.post.id},
+        { name: 'twitter:description', content: this.post.def[0]},
+        { name: 'twitter:image', content: 'https://evepheso.files.wordpress.com/2019/12/vocab.jpg'},
+        { name: 'twitter:card', content: 'summary_large_image'},
+
       ]
     }
   },
   computed: {
     post() {
-      return this.words.find(post => post.id === this.id)
+      return this.$store.state.words.all.find(post => post.id === this.id)
+    },
+    relatedWords() {
+      return this.$store.state.words.all.filter(post => post.id !== this.id)
     }
   }
 }

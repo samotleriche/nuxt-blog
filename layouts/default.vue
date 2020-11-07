@@ -10,17 +10,17 @@
     >
       <v-list>
         <v-list-item
-          v-for="(item, i) in items"
+          v-for="(item, i) in posts"
           :key="i"
-          :to="item.to"
+          :to="'/words/'+item.id"
           router
           exact
         >
           <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon>mdi-book</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title v-text="item.id" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -31,6 +31,18 @@
       fixed
       app
     >
+    <v-badge
+      :content="1"
+      :value="true"
+      color="red"
+      overlap
+    >
+      <v-avatar
+        color="teal"
+        rounded
+        size="40"
+      >TL</v-avatar>
+    </v-badge>
       <v-btn
         icon
         @click.stop="rightDrawer = !rightDrawer"
@@ -47,7 +59,33 @@
       <v-toolbar-title v-text="title" />
       <v-spacer />
 
+      <div class="text-center mx-1">
+        <a href="https://www.linkedin.com/in/tomasleriche/">
+        <v-avatar
+          tile
+          color="blue"
+        >
+          <v-icon dark>
+            mdi-linkedin
+          </v-icon>
+        </v-avatar>
+        </a>
+      </div>
+
+      <div class="text-center mx-1">
+        <a href="https://github.com/samotleriche">
+        <v-avatar
+          tile
+          color="blue"
+        >
+          <v-icon dark>
+            mdi-github
+          </v-icon>
+        </v-avatar>
+        </a>
+      </div>
     </v-app-bar>
+
 
     <v-main>
       <v-container>
@@ -57,7 +95,7 @@
 
     <v-navigation-drawer
       v-model="rightDrawer"
-      :right="left"
+      left
       temporary
       fixed
     >
@@ -110,6 +148,12 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'Vocabx.io',
+      messages: 0
+    }
+  },
+  computed: {
+    posts() {
+      return this.$store.state.words.all;
     }
   }
 }

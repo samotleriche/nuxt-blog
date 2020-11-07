@@ -76,13 +76,21 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
 export default {
   components: {
-    Logo,
-    VuetifyLogo
+
+  },
+  head(){
+    return {
+      title: 'Home Page 🤯',
+      meta: [
+        { name: 'twitter:title', content: "Tomas Resume Home"},
+        { name: 'twitter:description', content: "Nuxt + Vue Rocks!"},
+        { name: 'twitter:image', content: 'https://evepheso.files.wordpress.com/2019/12/vocab.jpg'},
+        { name: 'twitter:card', content: 'summary_large_image'},
+      ]
+    }
   }
 }
 </script>
