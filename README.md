@@ -1,5 +1,7 @@
 # demo-nuxt-app
 
+https://nuxt-blog-tleriche.herokuapp.com/
+
 ## Build Setup
 
 ```bash
