@@ -57,6 +57,30 @@
       </v-btn>
 
       <v-toolbar-title v-text="title" />
+
+
+      <div class="text-center mx-4">
+        <v-tooltip right>
+        <template v-slot:activator="{ on, attrs }">
+          <v-avatar
+          tile
+          v-bind="attrs"
+          v-on="on"
+          @click="$vuetify.theme.dark = !$vuetify.theme.dark; lightMode = !lightMode"
+          >
+            <v-icon
+            large
+              :color="!lightMode ? 'yellow' : 'blue'"
+            >
+              mdi-{{ !lightMode ? "white-balance-sunny" : "moon-waxing-crescent" }}
+            </v-icon>
+          </v-avatar>
+        </template>
+        <span>Toggle Theme</span>
+        </v-tooltip>
+      </div>
+
+
       <v-spacer />
 
       <div class="text-center mx-1">
@@ -148,7 +172,8 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'Vocabx.io',
-      messages: 0
+      messages: 0,
+      lightMode: false
     }
   },
   computed: {
