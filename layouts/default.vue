@@ -80,7 +80,6 @@
         </v-tooltip>
       </div>
 
-
       <v-spacer />
 
       <div class="text-center mx-1">
@@ -113,6 +112,12 @@
 
     <v-main>
       <v-container>
+        <v-alert v-if="$nuxt.isOffline" type="error">
+          You're Currently Offline. Check your connection.
+        </v-alert>
+        <v-btn @click="refresh">
+          Refresh
+        </v-btn>
         <nuxt />
       </v-container>
     </v-main>
@@ -179,6 +184,11 @@ export default {
   computed: {
     posts() {
       return this.$store.state.words.all;
+    }
+  },
+  methods: {
+    refresh() {
+      this.$nuxt.refresh()
     }
   }
 }

@@ -47,7 +47,6 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      post : []
     }
   },
   head() {
@@ -58,16 +57,23 @@ export default {
         { name: 'og:description', content: this.post.body},
         { name: 'og:image', content: 'https://evepheso.files.wordpress.com/2019/12/vocab.jpg'},
         { name: 'og:card', content: 'summary_large_image'},
-        { name: 'og:url', content: `https://nuxt-blog-tleriche.herokuapp.com${this.route}`},
-
+        { name: 'og:url', content: `https://nuxt-blog.com${this.route}`},
       ]
     }
   },
-  async asyncData({params, route, $axios}) {
-    console.log(route);
-    let response = await $axios.$get('https://jsonplaceholder.typicode.com/posts/' + params.id)
-    return {post: response, route: route.fullPath}
+  async fetch ({store, params}) {
+    await store.dispatch('posts/fetchPost', params.id)
+  },
+  computed: {
+    post () {
+      return this.$store.state.posts.all.find(post => post.id === Number(this.id));
+    }
   }
+  // async asyncData({params, route, $axios}) {
+  //   console.log(route);
+  //   let response = await $axios.$get('https://jsonplaceholder.typicode.com/posts/' + params.id)
+  //   return {post: response, route: route.fullPath}
+  // }
   // mounted () {
   //   fetch('https://jsonplaceholder.typicode.com/posts/' + this.id)
   //     .then((response) => {
